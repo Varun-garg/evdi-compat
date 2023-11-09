@@ -124,9 +124,13 @@ static struct drm_driver driver = {
 
 	.fops = &evdi_driver_fops,
 
+#if LINUX_VERSION_CODE <= KERNEL_VERSION(6, 6, 0)
 	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+#endif
 	.gem_prime_import = drm_gem_prime_import,
+#if LINUX_VERSION_CODE <= KERNEL_VERSION(6, 6, 0)
 	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+#endif
 #if KERNEL_VERSION(5, 11, 0) <= LINUX_VERSION_CODE || defined(EL8)
 #else
 	.preclose = evdi_driver_preclose,

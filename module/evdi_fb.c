@@ -418,7 +418,10 @@ static int evdifb_create(struct drm_fb_helper *helper,
 	info->fix.smem_start = (unsigned long)efbdev->efb.obj->vmapping;
 
 #if KERNEL_VERSION(4, 20, 0) <= LINUX_VERSION_CODE || defined(EL8)
+// KERNEL_VERSION(6, 6, 0) has removed FBINFO_DEFAULT as it is equal to 0, which is the default value
+#ifdef FBINFO_DEFAULT
 	info->flags = FBINFO_DEFAULT;
+#endif
 #else
 	info->flags = FBINFO_DEFAULT | FBINFO_CAN_FORCE_OUTPUT;
 #endif
